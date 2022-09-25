@@ -2,6 +2,8 @@ import react, { useEffect, useState } from 'react';
 import {Link} from  "@reach/router";
 import React from 'react';
 import Navbar from './Navbar';
+import '../style/Style.css';
+import Moment from 'react-moment';
 
 const Home = () => {
 
@@ -30,23 +32,27 @@ const Home = () => {
         <div>
             {console.log(posts,loading)}
             <Navbar />
-            <div className="mt-5 post-container">
-                    
-                        {loading ? (
-                            <>
-                            {posts.map((post) =>(
-                                <div key={post.id} className="card border-dark mb-3">
-                                        <h2><Link to={`/post/${post.id}`}>{post.title.rendered}</Link></h2>
-                                        <div className='card-body'>
-                                            <div className="card-text post-content">
-                                            <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
+            <div className='container'>
+                <div className="mt-5 post-container">
+                            {loading ? (
+                                <>
+                                {posts.map((post) =>(
+                                    <div key={post.id} className="card border-dark mb-3">
+                                            <h3 className='p-3'><Link to={`/post/${post.id}`}>{post.title.rendered}</Link></h3>
+                                            <div className='card-body'>
+                                                <div className="card-text post-content">
+                                                <div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}/>
+                                                <Link to={`/post/${post.id}`} className='btn btn-secondary float-end'>Read more</Link>
+                                                </div>
                                             </div>
-                                        </div>
-                                </div>
-                             ) )}
-                            </>
-                        ) : `Loading ...`}
-      
+                                            <div className="card-footer">
+                                                <Moment fromNow>{post.date}</Moment>
+                                            </div>
+                                    </div>
+                                ) )}
+                                </>
+                            ) : `Loading ...`}
+                </div>
             </div>
         </div>
     );
